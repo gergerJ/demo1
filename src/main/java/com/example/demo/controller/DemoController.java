@@ -15,7 +15,7 @@ public class DemoController {
     //@RequestMapping(value = "/demo" , method = RequestMethod.GET)
     @GetMapping(value = "/demo")  // 인터넷 접속방법!
     public ModelAndView demo(ModelAndView mv, String id){
-        log.info("?????????????????????희진push");
+        log.info("렁재렁재렁잴어잴저래어래");
 
         String name = "";
         if(id.equals("liu")){
