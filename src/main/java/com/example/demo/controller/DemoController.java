@@ -1,68 +1,61 @@
 package com.example.demo.controller;
 
+import com.example.demo.service.DemoService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class DemoController {
 
-    //@RequestMapping(value = "/demo" , method = RequestMethod.GET)
-    @GetMapping(value = "/demo")  // 인터넷 접속방법!
-    public ModelAndView demo(ModelAndView mv, String id){
-        log.info("렁재세번째 테스트");
+    private final DemoService demoService;
 
-        String name = "";
-        if(id.equals("liu")){
-            name = "김연우";
-        }else if(id.equals("2")){
-            name = "뽀삐";
-        }else{
-            name = "밍키";
-        }
 
-        String aaa = "[김연우,";
-        aaa +="이재성,";
-        aaa +="조한영,";
-        aaa +="허희진]";
 
-        new StringBuffer().append("[")
-                .append("김연우")
-                .append(",")
-                .append("이재성")
-                .append(",")
-                .append("조한영")
-                .append(",")
-                .append("허희진")
-                .append("]");
+    @GetMapping(value = "/findName")
+    public ModelAndView findName(ModelAndView mv, String id){
+        log.info("?????????????????????123");
 
-        new StringBuilder()
-                .append("[")
-                .append("김연우,")
-                .append("이재성,")
-                .append("조한영,")
-                .append("허희진")
-                .append("]");
-
-        new StringJoiner(",","[","]")
-                .add("김연우")
-                .add("이재성")
-                .add("조한영")
-                .add("허희진");
+        String name = demoService.idToName(id);
 
         log.info("name:::{}", name);
-        log.info("name:::" + name + "+ id ::::"+aaa);
-        log.info("name:::{}, id ::::{}", name, aaa);
 
         mv.addObject("id", id);
         mv.addObject("name", name);
         mv.setViewName("test.html");
         return mv;
     }
-}
 
+    @RequestMapping(value = "/demo" , method = RequestMethod.GET)
+    public ModelAndView demo(ModelAndView mv, String id){
+
+        // 네임 찾기
+        String name = demoService.idToName(id);
+
+        // 네임이 소속된 스터디 그룹 찾기
+        String sc = demoService.findService(name);
+
+        mv.addObject("sc", sc);
+        mv.setViewName("test2.html");
+        return mv;
+    }
+
+    @PostMapping(value = "/PostDemo")
+    public ModelAndView PostDemo(ModelAndView mv, String id){
+
+        // 네임 찾기
+        demoService.connectionTest();
+
+        mv.addObject("msg");
+        mv.setViewName("test2.html");
+        return mv;
+    }
+
+}

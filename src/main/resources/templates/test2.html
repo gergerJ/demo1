@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function btn() {
+            document.getElementById(btnId)
+        }
+    </script>
+</head>
+<body>
+    <form name="frm" action="/PostDemo" method="post">
+        <span th:text="${sc}"></span>
+
+        <br>
+
+        <button name="btn" id="btnId" onclick="">버튼</button>
+
+    </form>
+</body>
+</html>
